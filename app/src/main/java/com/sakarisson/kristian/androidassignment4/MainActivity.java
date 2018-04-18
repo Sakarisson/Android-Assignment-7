@@ -1,5 +1,7 @@
 package com.sakarisson.kristian.androidassignment4;
 
+import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,13 +37,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeIndividualListener(ImageView button) {
+    private void initializeIndividualListener(final ImageView button) {
         View.OnClickListener buttonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Do something with sound or other
+                buttonWasClicked(button);
             }
         };
         button.setOnClickListener(buttonListener);
+    }
+
+    private void buttonWasClicked(final ImageView button) {
+        // Run new thread for color switcharoo
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    button.setBackgroundColor(Color.rgb(100, 100, 100));
+                    Thread.sleep(150);
+                    button.setBackgroundColor(Color.rgb(255, 255, 255));
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }).start();
     }
 }
