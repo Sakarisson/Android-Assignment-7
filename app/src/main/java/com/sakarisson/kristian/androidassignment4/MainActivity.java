@@ -13,11 +13,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test);
-        initializeListeners();
+        setContentView(R.layout.activity_main);
+
+        DialpadView dialpadView = findViewById(R.id.dialpadView);
+        // initializeListeners();
     }
 
-    private void initializeListeners() {
+    /*private void initializeListeners() {
         ImageView[] buttons = {
                 findViewById(R.id.imageView0),
                 findViewById(R.id.imageView1),
@@ -60,5 +62,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
-    }
+    }*/
 }
