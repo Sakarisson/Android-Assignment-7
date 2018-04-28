@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 
@@ -14,8 +15,10 @@ import java.security.Key;
 public class DialpadView extends TableLayout {
     private Context context;
 
-    ImageView[] buttons;
-    int[] rawButtonSounds;
+    private ImageView[] buttons;
+    private int[] rawButtonSounds;
+
+    private EditText numberBox;
 
     public DialpadView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -25,6 +28,7 @@ public class DialpadView extends TableLayout {
     private void init() {
         context = getContext();
         inflate(getContext(), R.layout.dialpad_layout, this);
+        numberBox = findViewById(R.id.editText);
         initializeListeners();
     }
 
@@ -73,6 +77,7 @@ public class DialpadView extends TableLayout {
     }
 
     private void buttonWasClicked(final int index) {
+        addPressToTextField(index);
         final MediaPlayer buttonSound = MediaPlayer.create(context, rawButtonSounds[index]);
         // Run new thread for color switcharoo
         new Thread(new Runnable() {
@@ -87,6 +92,29 @@ public class DialpadView extends TableLayout {
                 }
             }
         }).start();
+    }
+
+    private void addPressToTextField(int index) {
+        String text = numberBox.getText().toString();
+        String toAdd = "";
+        if (index >= 0 && index <= 8) {
+            toAdd += (index + 1);
+        }
+        switch (index) {
+            case 9:
+                toAdd += "*";
+                break;
+            case 10:
+                toAdd += "0";
+                break;
+            case 11:
+                toAdd += "#";
+                break;
+            default:
+                break;
+        }
+        text += toAdd;
+        numberBox.setText(text);
     }
 
     public void keyWasPressed(int keyCode) {
