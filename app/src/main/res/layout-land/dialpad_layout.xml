@@ -3,83 +3,109 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:stretchColumns="*"
-        >
-        <TableRow
-            android:layout_weight="1"
-            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_1_blue" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_2_blue" />
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_3_blue" />
+        <TableLayout
+            android:id="@+id/tableLayout2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText">
+            <TableRow
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <ImageView
-                android:id="@+id/imageViewStar"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_star_blue" />
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_1_blue" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_2_blue" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_3_blue" />
+
+                <ImageView
+                    android:id="@+id/imageViewStar"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_star_blue" />
 
 
-        </TableRow>
-        <TableRow
-            android:layout_weight="1"
-            android:gravity="center">
+            </TableRow>
+            <TableRow
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_4_blue" />
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_4_blue" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_5_blue" />
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_5_blue" />
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_6_blue" />
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_6_blue" />
 
-            <ImageView
-                android:id="@+id/imageView0"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_0_blue" />
-        </TableRow>
-        <TableRow
-            android:layout_weight="1"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_7_blue" />
+                <ImageView
+                    android:id="@+id/imageView0"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_0_blue" />
+            </TableRow>
+            <TableRow
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_7_blue" />
 
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_8_blue" />
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_8_blue" />
 
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_9_blue" />
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_9_blue" />
 
-            <ImageView
-                android:id="@+id/imageViewPound"
-                android:layout_width="0dp"
-                app:srcCompat="@drawable/ic_dialpad_pound_blue" />
-        </TableRow>
-    </TableLayout>
+                <ImageView
+                    android:id="@+id/imageViewPound"
+                    android:layout_width="0dp"
+                    app:srcCompat="@drawable/ic_dialpad_pound_blue" />
+            </TableRow>
+        </TableLayout>
+    </android.support.constraint.ConstraintLayout>
 </merge>
