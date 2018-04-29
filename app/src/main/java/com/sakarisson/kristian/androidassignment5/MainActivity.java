@@ -1,5 +1,6 @@
 package com.sakarisson.kristian.androidassignment5;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -7,6 +8,7 @@ import android.view.KeyEvent;
 public class MainActivity extends AppCompatActivity {
 
     private DialpadView dialpadView;
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dialpadView = findViewById(R.id.dialpadView);
+        actionBar = getSupportActionBar();
     }
 
     @Override
