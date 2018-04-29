@@ -32,6 +32,7 @@ public class DialpadView extends TableLayout {
         context = getContext();
         inflate(getContext(), R.layout.dialpad_layout, this);
         numberBox = findViewById(R.id.editText);
+        numberBox.setFocusable(false);
         deleteButton = findViewById(R.id.deleteButton);
         callButton = findViewById(R.id.callButton);
         initializeListeners();
