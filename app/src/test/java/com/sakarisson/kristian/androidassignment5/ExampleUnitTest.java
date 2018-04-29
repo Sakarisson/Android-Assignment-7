@@ -1,4 +1,4 @@
-package com.sakarisson.kristian.androidassignment4;
+package com.sakarisson.kristian.androidassignment5;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.sakarisson.kristian.androidassignment4;
+package com.sakarisson.kristian.androidassignment5;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
-
-import java.security.Key;
 
 public class DialpadView extends TableLayout {
     private Context context;
