@@ -27,7 +27,6 @@ public class SavedNumbersActivity extends AppCompatActivity {
 
     private void drawSavedNumbers() {
         SharedPreferences sp = getSharedPreferences(getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
         String currentNumbers = sp.getString(getString(R.string.saved_numbers_key), "");
         savedNumbers.setText(currentNumbers);
     }
