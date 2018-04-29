@@ -5,10 +5,8 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_save_numbers_checkbox"
-        app:actionViewClass="android.widget.CheckBox"
-        android:title="filter"
-        app:showAsAction="always" />
+        android:id="@+id/save_button"
+        android:title="@string/save_numbers"/>
 
     <item
         android:id="@+id/action_call_list"

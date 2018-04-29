@@ -11,7 +11,6 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     private DialpadView dialpadView;
-    private Toolbar toolbar;
     private Intent savedNumbersIntent;
 
     @Override
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dialpadView = findViewById(R.id.dialpadView);
-        toolbar = findViewById(R.id.toolbar_menu);
+        Toolbar toolbar = findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
     }
 
@@ -41,13 +40,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_call_list) {
-            startActivity(savedNumbersIntent);
+        switch (id) {
+            case R.id.action_call_list:
+                startActivity(savedNumbersIntent);
+                break;
+            case R.id.save_button:
+                dialpadView.saveNumber();
+                break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);

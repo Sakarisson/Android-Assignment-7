@@ -2,9 +2,11 @@ package com.sakarisson.kristian.androidassignment5;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -74,6 +76,9 @@ public class DialpadView extends TableLayout {
             @Override
             public void onClick(View v) {
                 String number = numberBox.getText().toString();
+                if (number.equals("")) {
+                    return;
+                }
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + number));
                 context.startActivity(intent);
@@ -112,6 +117,15 @@ public class DialpadView extends TableLayout {
             }
         };
         buttons[index].setOnClickListener(buttonListener);
+    }
+
+    public void saveNumber() {
+        SharedPreferences sp = context.getSharedPreferences(context.getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        String currentNumbers = sp.getString(context.getString(R.string.saved_numbers_key), "");
+        String newNumbers = currentNumbers + numberBox.getText().toString() + "\n";
+        editor.putString(context.getString(R.string.saved_numbers_key), newNumbers);
+        editor.commit();
     }
 
     private void buttonWasClicked(final int index) {
