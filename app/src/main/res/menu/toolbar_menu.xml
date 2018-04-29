@@ -5,9 +5,15 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_favorite"
+        android:id="@+id/action_save_numbers_checkbox"
+        app:actionViewClass="android.widget.CheckBox"
+        android:title="filter"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_call_list"
         android:orderInCategory="300"
-        android:title="User"
+        android:title="@string/go_to_saved"
         android:icon="@drawable/ic_action_call_list_dark"
         app:showAsAction="ifRoom" />
 

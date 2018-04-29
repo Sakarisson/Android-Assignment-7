@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Android Assignment 5</string>
+    <string name="app_name">Dialpad</string>
+    <string name="go_to_saved">Go to saved</string>
 </resources>
