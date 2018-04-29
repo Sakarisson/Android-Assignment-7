@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 public class SavedNumbersActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class SavedNumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_numbers);
         savedNumbers = findViewById(R.id.savedNumbers);
+        savedNumbers.setMovementMethod(new ScrollingMovementMethod());
 
         toolbar = findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
