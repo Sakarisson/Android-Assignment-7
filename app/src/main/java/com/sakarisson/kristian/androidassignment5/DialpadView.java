@@ -1,12 +1,15 @@
 package com.sakarisson.kristian.androidassignment5;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 
@@ -17,6 +20,8 @@ public class DialpadView extends TableLayout {
     private int[] rawButtonSounds;
 
     private EditText numberBox;
+    private ImageButton deleteButton;
+    private ImageButton callButton;
 
     public DialpadView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -27,6 +32,8 @@ public class DialpadView extends TableLayout {
         context = getContext();
         inflate(getContext(), R.layout.dialpad_layout, this);
         numberBox = findViewById(R.id.editText);
+        deleteButton = findViewById(R.id.deleteButton);
+        callButton = findViewById(R.id.callButton);
         initializeListeners();
     }
 
@@ -62,6 +69,38 @@ public class DialpadView extends TableLayout {
         for (int i = 0; i < buttons.length; i++) {
             initializeIndividualListener(i);
         }
+        View.OnClickListener callButtonListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String number = numberBox.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + number));
+                context.startActivity(intent);
+            }
+        };
+        callButton.setOnClickListener(callButtonListener);
+
+        View.OnClickListener deleteButtonClickListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = numberBox.getText().toString();
+                if (text.length() > 0) {
+                    text = text.substring(0, text.length() - 1);
+                }
+                numberBox.setText(text);
+            }
+        };
+        deleteButton.setOnClickListener(deleteButtonClickListener);
+
+        View.OnLongClickListener deleteButtonLongClickListener = new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                String text = "";
+                numberBox.setText(text);
+                return true;
+            }
+        };
+        deleteButton.setOnLongClickListener(deleteButtonLongClickListener);
     }
 
     private void initializeIndividualListener(final int index) {
