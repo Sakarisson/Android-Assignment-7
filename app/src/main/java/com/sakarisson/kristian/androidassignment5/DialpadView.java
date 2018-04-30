@@ -1,12 +1,17 @@
 package com.sakarisson.kristian.androidassignment5;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Environment;
 import android.preference.Preference;
+import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -130,12 +135,17 @@ public class DialpadView extends TableLayout {
 
     private void buttonWasClicked(final int index) {
         addPressToTextField(index);
-        final MediaPlayer buttonSound = MediaPlayer.create(context, rawButtonSounds[index]);
+        MediaPlayer buttonSound = null;
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR)
+                == PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            String path = Environment.getExternalStorageDirectory().getPath();
+            buttonSound = MediaPlayer.create(context, Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/one.mp3"));
+        }
         // Run new thread for color switcharoo
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    buttonSound.start();
                     buttons[index].setBackgroundColor(Color.rgb(100, 100, 100));
                     Thread.sleep(150);
                     buttons[index].setBackgroundColor(Color.rgb(255, 255, 255));
