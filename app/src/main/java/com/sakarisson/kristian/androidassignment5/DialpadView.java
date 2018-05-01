@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.preference.Preference;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -137,7 +138,7 @@ public class DialpadView extends TableLayout {
         addPressToTextField(index);
         MediaPlayer buttonSound = null;
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
+            // Permission is granted
             String path = Environment.getExternalStorageDirectory().getPath();
             buttonSound = MediaPlayer.create(context, Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/one.mp3"));
         }
