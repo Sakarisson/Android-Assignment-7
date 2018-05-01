@@ -136,8 +136,7 @@ public class DialpadView extends TableLayout {
     private void buttonWasClicked(final int index) {
         addPressToTextField(index);
         MediaPlayer buttonSound = null;
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR)
-                == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
             String path = Environment.getExternalStorageDirectory().getPath();
             buttonSound = MediaPlayer.create(context, Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/one.mp3"));
