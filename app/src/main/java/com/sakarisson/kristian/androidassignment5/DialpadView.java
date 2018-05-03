@@ -13,6 +13,7 @@ import android.preference.Preference;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,11 +22,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 
+import java.io.File;
+
 public class DialpadView extends TableLayout {
     private Context context;
 
     private ImageView[] buttons;
-    private int[] rawButtonSounds;
+    private String[] buttonSoundNames;
 
     private EditText numberBox;
     private ImageButton deleteButton;
@@ -61,19 +64,19 @@ public class DialpadView extends TableLayout {
                 findViewById(R.id.imageView0),
                 findViewById(R.id.imageViewPound),
         };
-        rawButtonSounds = new int[] {
-                R.raw.one,
-                R.raw.two,
-                R.raw.three,
-                R.raw.four,
-                R.raw.five,
-                R.raw.six,
-                R.raw.seven,
-                R.raw.eight,
-                R.raw.nine,
-                R.raw.star,
-                R.raw.zero,
-                R.raw.pound,
+        buttonSoundNames = new String[] {
+                "one.mp3",
+                "two.mp3",
+                "three.mp3",
+                "four.mp3",
+                "five.mp3",
+                "six.mp3",
+                "seven.mp3",
+                "eight.mp3",
+                "nine.mp3",
+                "star.mp3",
+                "zero.mp3",
+                "pound.mp3",
         };
         for (int i = 0; i < buttons.length; i++) {
             initializeIndividualListener(i);
@@ -136,11 +139,11 @@ public class DialpadView extends TableLayout {
 
     private void buttonWasClicked(final int index) {
         addPressToTextField(index);
-        MediaPlayer buttonSound = null;
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Permission is granted
-            String path = Environment.getExternalStorageDirectory().getPath();
-            buttonSound = MediaPlayer.create(context, Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/one.mp3"));
+            File sound = new File(Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/" + buttonSoundNames[index]).getPath());
+            MediaPlayer buttonSound = MediaPlayer.create(context, Uri.fromFile(sound));
+            buttonSound.start();
         }
         // Run new thread for color switcharoo
         new Thread(new Runnable() {
