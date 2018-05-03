@@ -1,4 +1,4 @@
-package com.sakarisson.kristian.androidassignment5;
+package com.sakarisson.kristian.androidassignment6;
 
 import android.Manifest;
 import android.content.Context;
@@ -9,11 +9,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
-import android.preference.Preference;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;

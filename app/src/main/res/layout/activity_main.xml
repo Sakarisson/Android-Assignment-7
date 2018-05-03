@@ -16,7 +16,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <com.sakarisson.kristian.androidassignment5.DialpadView
+    <com.sakarisson.kristian.androidassignment6.DialpadView
         android:id="@+id/dialpadView"
         android:layout_width="0dp"
         android:layout_height="0dp"

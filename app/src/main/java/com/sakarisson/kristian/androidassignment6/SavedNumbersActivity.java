@@ -1,4 +1,4 @@
-package com.sakarisson.kristian.androidassignment5;
+package com.sakarisson.kristian.androidassignment6;
 
 import android.content.Context;
 import android.content.SharedPreferences;

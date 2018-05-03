@@ -1,4 +1,4 @@
-package com.sakarisson.kristian.androidassignment5;
+package com.sakarisson.kristian.androidassignment6;
 
 import android.Manifest;
 import android.content.DialogInterface;
