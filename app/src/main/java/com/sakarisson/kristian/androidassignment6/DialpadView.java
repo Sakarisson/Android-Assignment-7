@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -84,9 +85,7 @@ public class DialpadView extends TableLayout {
                 if (number.equals("")) {
                     return;
                 }
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + number));
-                context.startActivity(intent);
+                ((MainActivity)getContext()).makeCall(number);
             }
         };
         callButton.setOnClickListener(callButtonListener);
