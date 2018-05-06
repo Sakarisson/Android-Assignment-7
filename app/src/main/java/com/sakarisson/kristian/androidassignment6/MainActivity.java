@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
         requestCallPermission();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
             // Permission is granted
-            int a = 1;
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.fromParts("tel", number, null));
+            startActivity(callIntent);
         }
     }
 

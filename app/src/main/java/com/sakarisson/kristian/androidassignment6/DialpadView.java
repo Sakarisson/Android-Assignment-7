@@ -136,9 +136,17 @@ public class DialpadView extends TableLayout {
         addPressToTextField(index);
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Permission is granted
-            File sound = new File(Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/" + buttonSoundNames[index]).getPath());
-            MediaPlayer buttonSound = MediaPlayer.create(context, Uri.fromFile(sound));
-            buttonSound.start();
+            try {
+                File sound = new File(Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/" + buttonSoundNames[index]).getPath());
+                MediaPlayer buttonSound = MediaPlayer.create(context, Uri.fromFile(sound));
+                if (buttonSound != null) {
+                    buttonSound.start();
+                } else {
+                    throw new Exception("Could not assign sound to MediaPlayer");
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
         // Run new thread for color switcharoo
         new Thread(new Runnable() {
