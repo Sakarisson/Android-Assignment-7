@@ -1,7 +1,9 @@
 package com.sakarisson.kristian.androidassignment6;
 
 import android.os.AsyncTask;
+import android.os.Environment;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,12 +13,22 @@ import java.net.URL;
 
 public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        System.out.println("Starting download");
+    }
+
+    @Override
     protected String doInBackground(String... sUrl) {
         InputStream input = null;
         OutputStream output = null;
+        File downloadsDirectory;
+        File outputFile;
         HttpURLConnection connection = null;
         try {
             URL url = new URL(sUrl[0]);
+            downloadsDirectory = new File(Environment.getExternalStorageDirectory().getPath() + "/dialpad");
+            downloadsDirectory.mkdirs();
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
 
@@ -33,7 +45,8 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
 
             // download the file
             input = connection.getInputStream();
-            output = new FileOutputStream("/sdcard/file_name.extension");
+            outputFile = new File(downloadsDirectory, "test");
+            output = new FileOutputStream(outputFile);
 
             byte data[] = new byte[4096];
             long total = 0;
@@ -65,5 +78,10 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
                 connection.disconnect();
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(String file_url) {
+        System.out.println("Downloaded");
     }
 }

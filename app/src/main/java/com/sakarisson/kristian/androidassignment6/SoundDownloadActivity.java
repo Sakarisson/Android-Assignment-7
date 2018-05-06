@@ -1,7 +1,11 @@
 package com.sakarisson.kristian.androidassignment6;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
@@ -21,6 +25,15 @@ public class SoundDownloadActivity extends AppCompatActivity {
         web = findViewById(R.id.webview);
         web.setWebViewClient(new SoundDownloadWebViewClient());
         web.loadUrl("http://dt031g.programvaruteknik.nu/dialpad/sounds/");
+        DownloadSoundTask dlt = new DownloadSoundTask();
+        if (requestStoragePermission()) {
+            dlt.execute("http://dt031g.programvaruteknik.nu/dialpad/sounds/damien_us.dps");
+        }
+    }
+
+    private boolean requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     public class SoundDownloadWebViewClient extends WebViewClient {
