@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
             callIntent.setData(Uri.fromParts("tel", number, null));
             startActivity(callIntent);
+        }  else {
+            Toast.makeText(MainActivity.this, "Permission to make calls was not granted!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -65,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE);
             }
-        } else {
-            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
         }
     }
 
