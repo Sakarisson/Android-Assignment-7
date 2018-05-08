@@ -3,13 +3,18 @@ package com.sakarisson.kristian.androidassignment6;
 import android.os.AsyncTask;
 import android.os.Environment;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
     @Override
@@ -23,13 +28,18 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
         InputStream input = null;
         OutputStream output = null;
         File downloadsDirectory;
-        File outputFile;
+        File outputFile = null;
         HttpURLConnection connection = null;
+        URL url;
+        String downloadPath;
+        File extractPath = null;
+        String fileName;
         try {
-            URL url = new URL(sUrl[0]);
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/dialpad/downloads//";
-            String fileName = sUrl[0].substring(sUrl[0].lastIndexOf('/') + 1);
-            downloadsDirectory = new File(path);
+            url = new URL(sUrl[0]);
+            downloadPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/dialpad/downloads//";
+            extractPath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dialpad/sounds//");
+            fileName = sUrl[0].substring(sUrl[0].lastIndexOf('/') + 1);
+            downloadsDirectory = new File(downloadPath);
             downloadsDirectory.mkdirs();
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
@@ -75,6 +85,9 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
                 if (input != null) {
                     input.close();
                 }
+                if (outputFile != null && extractPath != null) {
+                    unzip(outputFile, extractPath);
+                }
             } catch (IOException ignored) {
                 // ignore...
             }
@@ -89,5 +102,36 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String file_url) {
         System.out.println("Downloaded");
+    }
+
+    // Since we have already been provided a Java file that does zip handling
+    // I figured that it would probably be okay to copy similar code from SO:
+    // https://stackoverflow.com/a/27050680/8857465
+    private static void unzip(File zipFile, File targetDirectory) throws IOException {
+        ZipInputStream zis = new ZipInputStream(
+                new BufferedInputStream(new FileInputStream(zipFile)));
+        try {
+            ZipEntry ze;
+            int count;
+            byte[] buffer = new byte[8192];
+            while ((ze = zis.getNextEntry()) != null) {
+                File file = new File(targetDirectory, ze.getName());
+                File dir = ze.isDirectory() ? file : file.getParentFile();
+                if (!dir.isDirectory() && !dir.mkdirs())
+                    throw new FileNotFoundException("Failed to ensure directory: " +
+                            dir.getAbsolutePath());
+                if (ze.isDirectory())
+                    continue;
+                FileOutputStream fout = new FileOutputStream(file);
+                try {
+                    while ((count = zis.read(buffer)) != -1)
+                        fout.write(buffer, 0, count);
+                } finally {
+                    fout.close();
+                }
+            }
+        } finally {
+            zis.close();
+        }
     }
 }
