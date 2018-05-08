@@ -27,7 +27,9 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
         HttpURLConnection connection = null;
         try {
             URL url = new URL(sUrl[0]);
-            downloadsDirectory = new File(Environment.getExternalStorageDirectory().getPath() + "/dialpad");
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/dialpad/downloads//";
+            String fileName = sUrl[0].substring(sUrl[0].lastIndexOf('/') + 1);
+            downloadsDirectory = new File(path);
             downloadsDirectory.mkdirs();
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
@@ -45,7 +47,7 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
 
             // download the file
             input = connection.getInputStream();
-            outputFile = new File(downloadsDirectory, "test");
+            outputFile = new File(downloadsDirectory, fileName);
             output = new FileOutputStream(outputFile);
 
             byte data[] = new byte[4096];
@@ -67,15 +69,19 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
             return e.toString();
         } finally {
             try {
-                if (output != null)
+                if (output != null) {
                     output.close();
-                if (input != null)
+                }
+                if (input != null) {
                     input.close();
+                }
             } catch (IOException ignored) {
+                // ignore...
             }
 
-            if (connection != null)
+            if (connection != null) {
                 connection.disconnect();
+            }
         }
         return null;
     }
