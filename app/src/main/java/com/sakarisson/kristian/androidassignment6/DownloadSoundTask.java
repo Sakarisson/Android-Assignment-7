@@ -85,7 +85,7 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
                 if (input != null) {
                     input.close();
                 }
-                if (outputFile != null && extractPath != null) {
+                if (outputFile != null) {
                     unzip(outputFile, extractPath);
                 }
             } catch (IOException ignored) {
