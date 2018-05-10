@@ -55,7 +55,6 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onProgressUpdate(Integer... progress) {
         super.onProgressUpdate(progress);
-        // if we get here, length is known, now set indeterminate to false
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setMax(100);
         mProgressDialog.setProgress(progress[0]);
@@ -93,7 +92,7 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
             // might be -1: server did not report the length
             int fileLength = connection.getContentLength();
 
-            // download the file
+            // Download file
             input = connection.getInputStream();
             outputFile = new File(downloadsDirectory, fileName);
             output = new FileOutputStream(outputFile);
@@ -108,8 +107,8 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
                     return null;
                 }
                 total += count;
-                // publishing the progress....
-                if (fileLength > 0) // only if total length is known
+                // Public progress
+                if (fileLength > 0)
                     publishProgress((int) (total * 100 / fileLength));
                 output.write(data, 0, count);
             }
@@ -154,8 +153,7 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
     // I figured that it would probably be okay to copy similar code from SO:
     // https://stackoverflow.com/a/27050680/8857465
     private static void unzip(File zipFile, File targetDirectory) throws IOException {
-        ZipInputStream zis = new ZipInputStream(
-                new BufferedInputStream(new FileInputStream(zipFile)));
+        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
         try {
             ZipEntry ze;
             int count;
@@ -163,15 +161,17 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
             while ((ze = zis.getNextEntry()) != null) {
                 File file = new File(targetDirectory, ze.getName());
                 File dir = ze.isDirectory() ? file : file.getParentFile();
-                if (!dir.isDirectory() && !dir.mkdirs())
-                    throw new FileNotFoundException("Failed to ensure directory: " +
-                            dir.getAbsolutePath());
-                if (ze.isDirectory())
+                if (!dir.isDirectory() && !dir.mkdirs()) {
+                    throw new FileNotFoundException("Failed to ensure directory: " + dir.getAbsolutePath());
+                }
+                if (ze.isDirectory()) {
                     continue;
+                }
                 FileOutputStream fout = new FileOutputStream(file);
                 try {
-                    while ((count = zis.read(buffer)) != -1)
+                    while ((count = zis.read(buffer)) != -1) {
                         fout.write(buffer, 0, count);
+                    }
                 } finally {
                     fout.close();
                 }
