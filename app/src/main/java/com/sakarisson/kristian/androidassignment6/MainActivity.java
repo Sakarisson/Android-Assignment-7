@@ -24,12 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
     private DialpadView dialpadView;
     private Intent savedNumbersIntent;
+    private Intent downloadSoundsIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         savedNumbersIntent = new Intent(this, SavedNumbersActivity.class);
+        downloadSoundsIntent = new Intent(this, SoundDownloadActivity.class);
 
         setContentView(R.layout.activity_main);
 
@@ -111,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.save_button:
                 dialpadView.saveNumber();
+                break;
+            case R.id.download_sounds:
+                startActivity(downloadSoundsIntent);
                 break;
             default:
                 break;

@@ -5,6 +5,9 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/download_sounds"
+        android:title="@string/download_sounds" />
+    <item
         android:id="@+id/save_button"
         android:title="@string/save_numbers"/>
 

@@ -28,10 +28,6 @@
         <activity
             android:name="com.sakarisson.kristian.androidassignment6.SoundDownloadActivity"
             android:parentActivityName="com.sakarisson.kristian.androidassignment6.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

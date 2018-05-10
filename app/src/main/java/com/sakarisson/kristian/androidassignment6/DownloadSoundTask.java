@@ -29,7 +29,7 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
     public DownloadSoundTask(Context context) {
         this.context = context;
         mProgressDialog = new ProgressDialog(context);
-        mProgressDialog.setMessage("A message");
+        mProgressDialog.setMessage("Downloading...");
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCancelable(true);
