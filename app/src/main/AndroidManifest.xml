@@ -29,6 +29,10 @@
             android:name="com.sakarisson.kristian.androidassignment6.SoundDownloadActivity"
             android:parentActivityName="com.sakarisson.kristian.androidassignment6.MainActivity" >
         </activity>
+        <activity
+            android:name="com.sakarisson.kristian.androidassignment6.SettingsActivity"
+            android:parentActivityName="com.sakarisson.kristian.androidassignment6.MainActivity" >
+        </activity>
     </application>
 
 </manifest>

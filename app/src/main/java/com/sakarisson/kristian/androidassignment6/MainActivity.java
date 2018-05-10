@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         dialpadView = findViewById(R.id.dialpadView);
         Toolbar toolbar = findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
+
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private void requestCallPermission () {
@@ -67,24 +70,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showExplanation(String title,
-                                 String message,
-                                 final String permission,
-                                 final int permissionRequestCode) {
+    private void showExplanation(String title, String message, final String permission, final int permissionRequestCode) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        requestPermission(permission, permissionRequestCode);
-                    }
-                });
+        builder.setTitle(title).setMessage(message).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                requestPermission(permission, permissionRequestCode);
+            }
+        });
         builder.create().show();
     }
 
     private void requestPermission(String permissionName, int permissionRequestCode) {
-        ActivityCompat.requestPermissions(this,
-                new String[]{permissionName}, permissionRequestCode);
+        ActivityCompat.requestPermissions(this, new String[]{permissionName}, permissionRequestCode);
     }
 
     @Override
