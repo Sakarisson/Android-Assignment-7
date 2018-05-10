@@ -1,7 +1,12 @@
 package com.sakarisson.kristian.androidassignment6;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.PowerManager;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -17,10 +22,43 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
+    private Context context;
+    private PowerManager.WakeLock mWakeLock;
+    private ProgressDialog mProgressDialog;
+
+    public DownloadSoundTask(Context context) {
+        this.context = context;
+        mProgressDialog = new ProgressDialog(context);
+        mProgressDialog.setMessage("A message");
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setCancelable(true);
+
+        mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                cancel(true);
+            }
+        });
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         System.out.println("Starting download");
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
+        mWakeLock.acquire();
+        mProgressDialog.show();
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... progress) {
+        super.onProgressUpdate(progress);
+        // if we get here, length is known, now set indeterminate to false
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setProgress(progress[0]);
     }
 
     @Override
@@ -100,8 +138,16 @@ public class DownloadSoundTask extends AsyncTask<String, Integer, String> {
     }
 
     @Override
-    protected void onPostExecute(String file_url) {
+    protected void onPostExecute(String result) {
         System.out.println("Downloaded");
+        mWakeLock.release();
+        mProgressDialog.dismiss();
+        if (result != null) {
+            Toast.makeText(context, "Download error: " + result, Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Since we have already been provided a Java file that does zip handling

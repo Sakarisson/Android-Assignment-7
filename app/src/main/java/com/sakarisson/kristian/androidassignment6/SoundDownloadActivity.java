@@ -18,6 +18,7 @@ public class SoundDownloadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.sound_download);
         toolbar = findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
@@ -25,10 +26,6 @@ public class SoundDownloadActivity extends AppCompatActivity {
         web = findViewById(R.id.webview);
         web.setWebViewClient(new SoundDownloadWebViewClient());
         web.loadUrl("http://dt031g.programvaruteknik.nu/dialpad/sounds/");
-        DownloadSoundTask dlt = new DownloadSoundTask();
-        if (requestStoragePermission()) {
-            dlt.execute("http://dt031g.programvaruteknik.nu/dialpad/sounds/damien_us.dps");
-        }
     }
 
     private boolean requestStoragePermission() {
@@ -44,8 +41,13 @@ public class SoundDownloadActivity extends AppCompatActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
+            if (url.startsWith("http://dt031g.programvaruteknik.nu/dialpad/sounds/")) {
+                final DownloadSoundTask dlt = new DownloadSoundTask(SoundDownloadActivity.this);
+                if (requestStoragePermission()) {
+                    dlt.execute(url);
+                }
+            }
+            return false;
         }
     }
 }
