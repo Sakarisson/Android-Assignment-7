@@ -4,9 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -18,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.File;
-
 public class MainActivity extends AppCompatActivity {
 
     private DialpadView dialpadView;
@@ -30,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
+
         savedNumbersIntent = new Intent(this, SavedNumbersActivity.class);
         downloadSoundsIntent = new Intent(this, SoundDownloadActivity.class);
-
-        setContentView(R.layout.activity_main);
 
         showPhoneStatePermission();
 
