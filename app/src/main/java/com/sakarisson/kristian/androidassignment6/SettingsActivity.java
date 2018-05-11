@@ -15,20 +15,35 @@ import java.util.ArrayList;
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private RadioGroup rg;
-    private String relativePath = "/dialpad/sounds";
-    private File directory;
+    private String selectedSound = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
         rg = findViewById(R.id.radiogroup);
+        sp = getSharedPreferences("SAVED_SOUNDS", Context.MODE_PRIVATE);
         ArrayList<File> folders = getSoundFolders();
+        selectedSound = getSelectedSound();
         for (File directory : folders) {
-            generateRadioButton(directory, false);
+            String dirName = directory.getName();
+            boolean checked = false;
+            if (dirName.equals(selectedSound)) {
+                checked = true;
+            }
+            generateRadioButton(directory, checked);
         }
-        sp = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-        String test = sp.getString("waa", "not found");
+    }
+
+    private String getSelectedSound() {
+        String value = sp.getString("SELECTED", null);
+        return value;
+    }
+
+    private void setSelectedSound(String sound) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("SELECTED", sound);
+        editor.commit();
     }
 
     private void generateRadioButton(File dir, boolean checked) {
@@ -39,6 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private ArrayList<File> getSoundFolders() {
+        String relativePath = "/dialpad/sounds";
+        File directory;
         String fullPath = Environment.getExternalStorageDirectory().getAbsolutePath() + relativePath;
         directory = new File(fullPath);
         ArrayList<File> files = new ArrayList<File>();

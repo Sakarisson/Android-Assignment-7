@@ -17,5 +17,8 @@
         android:title="@string/go_to_saved"
         android:icon="@drawable/ic_action_call_list_dark"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/go_to_settings"
+        android:title="@string/settings" />
 
 </menu>

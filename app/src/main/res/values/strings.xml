@@ -5,4 +5,5 @@
     <string name="download_sounds">Download More Sounds</string>
     <string name="shared_preference_key">SHARED_PREFERENCES</string>
     <string name="saved_numbers_key">SAVED_NUMBERS</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private DialpadView dialpadView;
     private Intent savedNumbersIntent;
     private Intent downloadSoundsIntent;
+    private Intent settingsActivityIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
         savedNumbersIntent = new Intent(this, SavedNumbersActivity.class);
         downloadSoundsIntent = new Intent(this, SoundDownloadActivity.class);
+        settingsActivityIntent = new Intent(this, SettingsActivity.class);
 
         showPhoneStatePermission();
 
         dialpadView = findViewById(R.id.dialpadView);
         Toolbar toolbar = findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
-
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
     }
 
     private void requestCallPermission () {
@@ -109,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.download_sounds:
                 startActivity(downloadSoundsIntent);
+                break;
+            case R.id.go_to_settings:
+                startActivity(settingsActivityIntent);
                 break;
             default:
                 break;
