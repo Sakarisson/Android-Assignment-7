@@ -155,7 +155,7 @@ public class DialpadView extends TableLayout {
             }
         }
         // Run new thread for color switcharoo
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             public void run() {
                 try {
                     buttons[index].setBackgroundColor(Color.rgb(100, 100, 100));
@@ -165,7 +165,7 @@ public class DialpadView extends TableLayout {
                     System.out.println(e);
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     private void addPressToTextField(int index) {
