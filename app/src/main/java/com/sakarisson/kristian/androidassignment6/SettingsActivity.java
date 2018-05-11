@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -22,6 +23,14 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
         rg = findViewById(R.id.radiogroup);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton clicked = group.findViewById(checkedId);
+                String name = (String) clicked.getText();
+                setSelectedSound(name);
+            }
+        });
         sp = getSharedPreferences("SAVED_SOUNDS", Context.MODE_PRIVATE);
         ArrayList<File> folders = getSoundFolders();
         selectedSound = getSelectedSound();

@@ -131,13 +131,19 @@ public class DialpadView extends TableLayout {
         editor.putString(context.getString(R.string.saved_numbers_key), newNumbers);
         editor.commit();
     }
+    private String getSelectedSound() {
+        SharedPreferences sp = context.getSharedPreferences("SAVED_SOUNDS", Context.MODE_PRIVATE);
+        String value = sp.getString("SELECTED", null);
+        return value;
+    }
 
     private void buttonWasClicked(final int index) {
         addPressToTextField(index);
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Permission is granted
             try {
-                File sound = new File(Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/mamacita_us/" + buttonSoundNames[index]).getPath());
+                String selectedSound = getSelectedSound();
+                File sound = new File(Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dialpad/sounds/" + selectedSound + "/" + buttonSoundNames[index]).getPath());
                 MediaPlayer buttonSound = MediaPlayer.create(context, Uri.fromFile(sound));
                 if (buttonSound != null) {
                     buttonSound.start();
