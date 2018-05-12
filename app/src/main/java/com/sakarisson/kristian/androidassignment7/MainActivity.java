@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    public void requestLocationPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+    }
+
     private void requestCallPermission () {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, PackageManager.PERMISSION_GRANTED);
     }

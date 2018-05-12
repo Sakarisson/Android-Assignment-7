@@ -4,9 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -16,10 +18,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.File;
 
 public class DialpadView extends TableLayout {
     private Context context;
+    private FusedLocationProviderClient locationProvider;
 
     private ImageView[] buttons;
     private String[] buttonSoundNames;
@@ -33,9 +40,24 @@ public class DialpadView extends TableLayout {
         init();
     }
 
+    private void testLocation() {
+        ((MainActivity)getContext()).requestLocationPermission();
+        if ((ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            locationProvider.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // do something
+                    }
+                });
+        }
+    }
+
     private void init() {
         context = getContext();
         inflate(getContext(), R.layout.dialpad_layout, this);
+        locationProvider = LocationServices.getFusedLocationProviderClient(context);
+        testLocation();
         numberBox = findViewById(R.id.editText);
         numberBox.setFocusable(false);
         deleteButton = findViewById(R.id.deleteButton);
@@ -121,13 +143,9 @@ public class DialpadView extends TableLayout {
     }
 
     public void saveNumber() {
-        SharedPreferences sp = context.getSharedPreferences(context.getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        String currentNumbers = sp.getString(context.getString(R.string.saved_numbers_key), "");
-        String newNumbers = currentNumbers + numberBox.getText().toString() + "\n";
-        editor.putString(context.getString(R.string.saved_numbers_key), newNumbers);
-        editor.commit();
+
     }
+
     private String getSelectedSound() {
         SharedPreferences sp = context.getSharedPreferences("SAVED_SOUNDS", Context.MODE_PRIVATE);
         String value = sp.getString("SELECTED", null);
