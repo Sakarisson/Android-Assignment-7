@@ -1,6 +1,7 @@
 package com.sakarisson.kristian.androidassignment7;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -37,6 +38,8 @@ public class DialpadView extends TableLayout {
     private ImageButton deleteButton;
     private ImageButton callButton;
 
+    SQLiteDatabase database;
+
     public DialpadView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -46,6 +49,7 @@ public class DialpadView extends TableLayout {
         context = getContext();
         inflate(getContext(), R.layout.dialpad_layout, this);
         locationProvider = LocationServices.getFusedLocationProviderClient(context);
+        database = new PhoneCallsDatabaseSQLiteHelper(context).getWritableDatabase();
         numberBox = findViewById(R.id.editText);
         numberBox.setFocusable(false);
         deleteButton = findViewById(R.id.deleteButton);
@@ -153,7 +157,19 @@ public class DialpadView extends TableLayout {
     }
 
     private void saveLocation(double latitude, double longitude, final String number) {
-        // TODO
+        ContentValues values = new ContentValues();
+        values.put(
+                PhoneCallsDatabase.Calls.COLUMN_NUMBER,
+                number
+        );
+        values.put(
+                PhoneCallsDatabase.Calls.COLUMN_LATITUDE,
+                latitude
+        );
+        values.put(
+                PhoneCallsDatabase.Calls.COLUMN_LONGITUDE,
+                longitude
+        );
     }
 
     private String getSelectedSound() {
