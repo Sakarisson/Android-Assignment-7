@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -47,9 +48,12 @@ public class DialpadView extends TableLayout {
                 .addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        // do something
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
                     }
                 });
+        } else {
+            Toast.makeText(context, "Permission to get location data was not granted!", Toast.LENGTH_SHORT).show();
         }
     }
 
