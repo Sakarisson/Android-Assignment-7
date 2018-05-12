@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -41,27 +42,10 @@ public class DialpadView extends TableLayout {
         init();
     }
 
-    private void testLocation() {
-        ((MainActivity)getContext()).requestLocationPermission();
-        if ((ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            locationProvider.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-                    }
-                });
-        } else {
-            Toast.makeText(context, "Permission to get location data was not granted!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void init() {
         context = getContext();
         inflate(getContext(), R.layout.dialpad_layout, this);
         locationProvider = LocationServices.getFusedLocationProviderClient(context);
-        testLocation();
         numberBox = findViewById(R.id.editText);
         numberBox.setFocusable(false);
         deleteButton = findViewById(R.id.deleteButton);
@@ -147,7 +131,29 @@ public class DialpadView extends TableLayout {
     }
 
     public void saveNumber() {
+        String number = numberBox.getText().toString();
+        saveLocationToDatabase(number);
+    }
 
+    private void saveLocationToDatabase(final String number) {
+        ((MainActivity)getContext()).requestLocationPermission();
+        if ((ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            locationProvider.getLastLocation()
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            saveLocation(latitude, longitude, number);
+                        }
+                    });
+        } else {
+            Toast.makeText(context, "Permission to get location data was not granted!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveLocation(double latitude, double longitude, final String number) {
+        // TODO
     }
 
     private String getSelectedSound() {
