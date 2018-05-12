@@ -1,16 +1,14 @@
-package com.sakarisson.kristian.androidassignment6;
+package com.sakarisson.kristian.androidassignment7;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {

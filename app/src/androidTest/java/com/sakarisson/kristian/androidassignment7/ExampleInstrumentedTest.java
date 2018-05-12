@@ -1,4 +1,4 @@
-package com.sakarisson.kristian.androidassignment6;
+package com.sakarisson.kristian.androidassignment7;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

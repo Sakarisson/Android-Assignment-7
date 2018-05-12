@@ -1,4 +1,4 @@
-package com.sakarisson.kristian.androidassignment6;
+package com.sakarisson.kristian.androidassignment7;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
