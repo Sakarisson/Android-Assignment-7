@@ -4,10 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.widget.RecyclerView;
-
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public final class DatabaseHandler {
     private SQLiteDatabase database;
@@ -30,8 +29,11 @@ public final class DatabaseHandler {
                 PhoneCallsDatabase.Calls.COLUMN_LONGITUDE,
                 longitude
         );
+        values.put(
+                PhoneCallsDatabase.Calls.COLUMN_TIMESTAMP,
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
+        );
         long newRowId = database.insert(PhoneCallsDatabase.Calls.TABLE_NAME, null, values);
-        getAllCallRows();
         return newRowId;
     }
 
@@ -40,14 +42,15 @@ public final class DatabaseHandler {
                 PhoneCallsDatabase.Calls._ID,
                 PhoneCallsDatabase.Calls.COLUMN_NUMBER,
                 PhoneCallsDatabase.Calls.COLUMN_LATITUDE,
-                PhoneCallsDatabase.Calls.COLUMN_LONGITUDE
+                PhoneCallsDatabase.Calls.COLUMN_LONGITUDE,
+                PhoneCallsDatabase.Calls.COLUMN_TIMESTAMP
         };
 
         Cursor cursor = database.query(
                 PhoneCallsDatabase.Calls.TABLE_NAME, projection, null, null, null, null, null
         );
-        ArrayList<Call> calls = new ArrayList<Call>();
-        if (cursor.moveToFirst()) {
+        ArrayList<Call> calls = new ArrayList<>();
+        if (cursor.moveToFirst() && cursor.getCount() != 0) {
             calls.add(generateCall(cursor));
             while (cursor.moveToNext()) {
                 calls.add(generateCall(cursor));
@@ -60,6 +63,7 @@ public final class DatabaseHandler {
         String number = cursor.getString(cursor.getColumnIndex(PhoneCallsDatabase.Calls.COLUMN_NUMBER));
         double latitude = cursor.getDouble(cursor.getColumnIndex(PhoneCallsDatabase.Calls.COLUMN_LATITUDE));
         double longitude = cursor.getDouble(cursor.getColumnIndex(PhoneCallsDatabase.Calls.COLUMN_LONGITUDE));
-        return new Call(number, latitude, longitude);
+        String timestamp = cursor.getString(cursor.getColumnIndex(PhoneCallsDatabase.Calls.COLUMN_TIMESTAMP));
+        return new Call(number, latitude, longitude, timestamp);
     }
 }

@@ -37,13 +37,7 @@ public class SavedNumbersActivity extends AppCompatActivity {
         mAdapter = new CallsAdapter(database.getAllCallRows());
         mRecyclerView.setAdapter(mAdapter);
 
-
         toolbar = findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
-        drawSavedNumbers();
-    }
-
-    private void drawSavedNumbers() {
-
     }
 }
