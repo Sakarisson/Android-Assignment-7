@@ -38,7 +38,7 @@ public class DialpadView extends TableLayout {
     private ImageButton deleteButton;
     private ImageButton callButton;
 
-    PhoneCallsDatabaseSQLiteHelper databaseHelper;
+    DatabaseHandler database;
 
     public DialpadView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,7 +49,7 @@ public class DialpadView extends TableLayout {
         context = getContext();
         inflate(getContext(), R.layout.dialpad_layout, this);
         locationProvider = LocationServices.getFusedLocationProviderClient(context);
-        databaseHelper = new PhoneCallsDatabaseSQLiteHelper(context);
+        database = new DatabaseHandler(context);
         numberBox = findViewById(R.id.editText);
         numberBox.setFocusable(false);
         deleteButton = findViewById(R.id.deleteButton);
@@ -146,9 +146,11 @@ public class DialpadView extends TableLayout {
                     .addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            double latitude = location.getLatitude();
-                            double longitude = location.getLongitude();
-                            saveLocation(latitude, longitude, number);
+                            if (location != null) {
+                                double latitude = location.getLatitude();
+                                double longitude = location.getLongitude();
+                                saveLocation(latitude, longitude, number);
+                            }
                         }
                     });
         } else {
@@ -157,7 +159,7 @@ public class DialpadView extends TableLayout {
     }
 
     private void saveLocation(double latitude, double longitude, final String number) {
-        databaseHelper.insertRowToCalls(number, latitude, longitude);
+        database.insertRowToCalls(number, latitude, longitude);
     }
 
     private String getSelectedSound() {
