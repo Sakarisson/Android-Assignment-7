@@ -25,8 +25,8 @@ public class CallsAdapter extends RecyclerView.Adapter<CallsAdapter.ViewHolder> 
 
     @Override
     public CallsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.my_text_view, parent, false);
-        TextView v = new TextView(parent.getContext());
+        TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_numbers_element, parent, false);
+        // TextView v = new TextView(parent.getContext());
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -34,7 +34,6 @@ public class CallsAdapter extends RecyclerView.Adapter<CallsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mTextView.setText(calls.get(position).getNumber());
-
     }
 
     @Override
