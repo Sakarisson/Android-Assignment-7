@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Dialpad</string>
     <string name="go_to_saved">Go to saved</string>
-    <string name="save_numbers">Save numbers</string>
+    <string name="save_numbers">Save number</string>
     <string name="download_sounds">Download More Sounds</string>
     <string name="shared_preference_key">SHARED_PREFERENCES</string>
     <string name="saved_numbers_key">SAVED_NUMBERS</string>
