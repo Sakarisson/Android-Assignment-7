@@ -32,7 +32,11 @@ public class CallsAdapter extends RecyclerView.Adapter<CallsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.setText(calls.get(position).getNumber());
+        String text = calls.get(position).getNumber() + "\n";
+        text += calls.get(position).getTimestamp() + " GMT \n";
+        text += "Latitude: " + calls.get(position).getLatitude();
+        text += ", Longitude" + calls.get(position).getLongitude();
+        holder.mTextView.setText(text);
     }
 
     @Override
